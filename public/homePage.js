@@ -1,7 +1,13 @@
 "use strict";
 
 const logoutButton = new LogoutButton();
-LogoutButton.action = () => {
-    ApiConnector.logout(location.reload())
-  /* if (action === true) return location.reload(); */
+
+logoutButton.action = () => {
+  ApiConnector.logout((resp) => {
+    console.log(resp);
+    if (resp.success === true);
+    {
+      location.reload();
+    }
+  });
 };
