@@ -11,3 +11,10 @@ logoutButton.action = () => {
     }
   });
 };
+
+ApiConnector.current((resp) => {
+  if (resp.success === true);
+  {
+    ProfileWidget.showProfile(resp.data);
+  }
+});
