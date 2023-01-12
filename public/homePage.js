@@ -28,3 +28,18 @@ setInterval(() => {
     }
   });
 }, 60000);
+
+const moneyManager = new MoneyManager();
+
+moneyManager.addMoneyCallback = (data) => {
+  ApiConnector.addMoney(data, (resp) => {
+    if (resp.success === true) {
+      ProfileWidget.showProfile(resp.data);
+      moneyManager.setMessage(resp.success, "Работает");
+    } else {
+      moneyManager.setMessage(resp.success, resp.error);
+    }
+  });
+
+};
+
