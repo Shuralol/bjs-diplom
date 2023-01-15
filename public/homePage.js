@@ -40,6 +40,60 @@ moneyManager.addMoneyCallback = (data) => {
       moneyManager.setMessage(resp.success, resp.error);
     }
   });
-
+};
+moneyManager.conversionMoneyCallback = (data) => {
+  ApiConnector.convertMoney(data, (resp) => {
+    if (resp.success === true) {
+      ProfileWidget.showProfile(resp.data);
+      moneyManager.setMessage(resp.success, "Работает");
+    } else {
+      moneyManager.setMessage(resp.success, resp.error);
+    }
+  });
 };
 
+moneyManager.sendMoneyCallback = (data) => {
+  ApiConnector.transferMoney(data, (resp) => {
+    if (resp.success === true) {
+      ProfileWidget.showProfile(resp.data);
+      moneyManager.setMessage(resp.success, "Работает");
+    } else {
+      moneyManager.setMessage(resp.success, resp.error);
+    }
+  });
+};
+
+const favoritesWidget = new FavoritesWidget();
+ApiConnector.getFavorites((resp) => {
+  if (resp.success === true) {
+    favoritesWidget.clearTable();
+    favoritesWidget.fillTable(resp.data);
+    moneyManager.updateUsersList(resp.data);
+  }
+});
+
+favoritesWidget.addUserCallback = (data) => {
+  ApiConnector.addUserToFavorites(data, (resp) => {
+    if (resp.success === true) {
+      favoritesWidget.clearTable();
+      favoritesWidget.fillTable(resp.data);
+      moneyManager.updateUsersList(resp.data);
+      favoritesWidget.setMessage(resp.success, "Работает");
+    } else {
+      favoritesWidget.setMessage(resp.success, resp.error);
+    }
+  });
+};
+
+favoritesWidget.removeUserCallback = (data) => {
+  ApiConnector.removeUserFromFavorites(data, (resp) => {
+    if (resp.success === true) {
+      favoritesWidget.clearTable();
+      favoritesWidget.fillTable(resp.data);
+      moneyManager.updateUsersList(resp.data);
+      favoritesWidget.setMessage(resp.success, "Работает");
+    } else {
+      favoritesWidget.setMessage(resp.success, resp.error);
+    }
+  });
+};
